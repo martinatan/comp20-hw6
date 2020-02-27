@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>HW5 JavaScript Practice Part 2 - Martina Tan</title>
+
+	<style>
+		body {
+			font-size:18px;
+			font-family: Futura, Helvetica, Sans-Serif;
+		}
+	</style>
+
+	<script>
+		//Reads and displays the numbers entered in the form
+		function read()
+		{
+			var num1 = document.amicableform.num1.value;
+			var num2 = document.amicableform.num2.value;
+			document.getElementById('results').innerHTML += num1 + " and " + num2;
+		}
+
+		function isFactor(num, testnum)
+		{
+			var remainder = num % testnum;
+			if (remainder == 0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		//Test code for the isFactor function
+		function test_isFactor()
+		{
+			//Answer should be no; 5 is not a factor of 12
+			if (!(isFactor(12, 5)))
+			{
+				document.getElementById('results').innerHTML += "isFactor was correct<br>";
+			}
+			else
+			{
+				document.getElementById('results').innerHTML += "isFactor was incorrect<br>";
+			}
+
+			//Answer should be yes; 6 is a factor of 12
+			if (isFactor(12, 6))
+			{
+				document.getElementById('results').innerHTML += "isFactor was correct<br>";
+			}
+			else
+			{
+				document.getElementById('results').innerHTML += "isFactor was incorrect<br>";
+			}
+		}
+
+		function showFactors(arr)
+		{
+			for (var i = 0; i < arr.length; i++)
+			{
+				document.getElementById('results').innerHTML += arr[i] + " ";
+			}
+		}
+
+		//Test code for the showFactors function
+		function test_showFactors()
+		{
+			var test1 = new Array(3, 6, 9, "damn", "she", "fine");
+			showFactors(test1);
+		}
+
+		function addFactors(arr)
+		{
+			var sum = 0;
+			for (var i = 0; i < arr.length; i++)
+			{
+				sum += arr[i];
+			}
+			return sum;
+		}
+
+		//Test code for the test_addFactors function
+		function test_addFactors()
+		{
+			var test2 = new Array(1, 1, 12, 8, 15, 5);
+			if (addFactors(test2) == 42)
+			{
+				document.getElementById('results').innerHTML += "<br>addFactors works!";
+			}
+			else
+			{
+				document.getElementById('results').innerHTML += "<br>addFactors does not work";
+			}
+		}
+
+		function getFactors(num)
+		{
+			var factors_array = [], i;
+
+			for (i = 1; i <= Math.floor(Math.sqrt(num)); i++)
+			{
+				if (num % i  == 0)
+				{
+					factors_array.push(i);
+
+					var string = i;
+
+					if (num / i != i)
+					{
+						factors_array.push(num / i);
+
+						string = num / i;
+					}
+				}
+			}
+			//Numeric sort function
+			factors_array.sort(function(a, b){return a-b});
+
+			return factors_array;
+		}
+
+		//Test code for the test_getFactors function
+		function test_getFactors()
+		{
+			document.getElementById('results').innerHTML += "Factors of 17: " + getFactors(17) +
+			"<br>Factors of 36: " + getFactors(36) +
+			"<br>Factors of 128: " + getFactors(128) + 
+			"<br>Factors of 0: " + getFactors(0);
+		}
+
+		//Function to give results on whether the two form entries are amicable or not.
+		function areAmicable()
+		{
+			var num1 = document.amicableform.num1.value;
+			var num2 = document.amicableform.num2.value;
+
+			var factor_sum1 = addFactors(getFactors(num1)) - num1;
+			var factor_sum2 = addFactors(getFactors(num2)) - num2;
+
+			document.getElementById('results').innerHTML += "<br>Sum of factors of first number (excluding itself): " + factor_sum1;
+			document.getElementById('results').innerHTML += "<br>Sum of factors of second number (excluding itself): " + factor_sum2;
+
+			if (factor_sum1 == num2 && factor_sum2 == num1)
+			{
+				document.getElementById('results').innerHTML += "<br>" + num1 + " and " + num2 + " are amicable.";
+			}
+			else
+			{
+				document.getElementById('results').innerHTML += "<br>" + num1 + " and " + num2 + " are not amicable.";
+			}
+		}
+
+	</script>
+</head>
+
+<body>
+
+<div id="form">
+	<form name="amicableform">
+		<label for="num1">First number: </label>
+		<input type="text" id="num1" name="num1"><br>
+		<label for="num2">Second number: </label>
+		<input type="text" id="num2" name="num2"><br>
+		<input type="button" value="Check!" onclick="areAmicable()">
+	</form>
+</div>
+
+<div id="results">
+
+</div>
+
+<script language = javascript>
+	//test_isFactor();
+
+	//test_showFactors();
+
+	//test_addFactors();
+
+	//test_getFactors();
+</script>
+
+</body>
+</html>

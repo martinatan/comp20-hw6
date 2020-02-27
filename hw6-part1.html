@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>HW5 JavaScript Practice Part 1 - Martina Tan</title>
+<style>
+	body {
+		font-size:18px;
+		font-family: Futura, Helvetica, Sans-Serif;
+	}
+</style>
+
+<script>
+	function parse_and_calc()
+	{
+		//Parse five numbers from form entry
+		var nums_string = document.payoutcalc.nums_guess.value;
+		//document.getElementById('payout').innerHTML += "Here is what we parsed: " + nums_string;
+		var guesses = nums_string.split(" ");
+
+		//Parse lucky ball guess from form entry
+		var lucky_guess = document.payoutcalc.luckyball_guess.value;
+		//document.getElementById('payout_results').innerHTML = guesses + " " + lucky_guess;
+
+		calculate(nums, guesses, luckyball, lucky_guess);
+	}
+
+	function calculate(nums, guesses, luckyball, lucky_guess)
+	{
+		//Count how many guesses match the 5 generated numbers
+		var count_correct = 0;
+		for (var j = 0; j < guesses.length; j++)
+		{
+			for (var k = 0; k < nums.length; k++)
+			{
+				if (guesses[j] == nums[k])
+				{
+					count_correct++;
+				}
+			}
+		}
+		//Check if lucky ball has been guessed correctly
+		var lucky = false;
+		if (luckyball == lucky_guess)
+		{
+			lucky = true;
+		}
+
+		results(count_correct, lucky);
+	}
+
+	function results(count_correct, lucky)
+	{
+		//document.getElementById('payout_results').innerHTML = count_correct + " " + lucky;
+
+		if (count_correct == 5 && lucky) {
+			document.getElementById('payout_results').innerHTML = "You win $7000 a WEEK for LIFE!";
+		}
+		else if (count_correct == 5 && !lucky) {
+			document.getElementById('payout_results').innerHTML = "You win $25,000 a YEAR for LIFE!";
+		}
+		else if (count_correct == 4 && lucky) {
+			document.getElementById('payout_results').innerHTML = "You win $5000!";
+		}
+		else if (count_correct == 4 && !lucky) {
+			document.getElementById('payout_results').innerHTML = "You win $200!";
+		}
+		else if (count_correct == 3 && lucky) {
+			document.getElementById('payout_results').innerHTML = "You win $150!";
+		}
+		else if (count_correct == 3 && !lucky) {
+			document.getElementById('payout_results').innerHTML = "You win $20!";
+		}
+		else if (count_correct == 2 && lucky) {
+			document.getElementById('payout_results').innerHTML = "You win $25!";
+		}
+		else if (count_correct == 2 && !lucky) {
+			document.getElementById('payout_results').innerHTML = "You win $3!";
+		}
+		else if (count_correct == 1 && lucky) {
+			document.getElementById('payout_results').innerHTML = "You win $6!";
+		}
+		else if (count_correct == 0 && lucky) {
+			document.getElementById('payout_results').innerHTML = "You win $4!";
+		}
+		else {
+			document.getElementById('payout_results').innerHTML = "You didn't win anything, better luck next time!";
+		}
+	}
+
+</script>
+</head>
+
+
+<body>
+
+<div id="presort">
+	<p>Here are the lottery numbers before sorting:</p>	
+</div>
+
+<div id="postsort">
+	<p>Here are the lottery numbers after sorting:</p>
+</div>
+
+<div id="payout">
+<p>
+<form name="payoutcalc">
+	<label for="nums_guess">Enter your 5 numbers, between 1-48 (separate each by a space): </label>
+	<input type="text" id="nums_guess" name="nums_guess"><br><br>
+	<label for="luckyball_guess">Enter your lucky ball number: </label>
+	<input type="text" id="luckyball_guess" name="luckyball_guess"><br><br>
+	<input type="button" value="Submit" onclick="parse_and_calc()">
+</form>
+</p>
+</div>
+
+<div id="payout_results">
+
+</div>
+
+<script type="text/javascript">
+
+var nums = new Array(5);
+
+for (var i = 0; i < nums.length; i++)
+{
+	//Generate lottery number, 1-48 inclusive
+	nums[i] = Math.floor(Math.random() * (49 - 1) + 1);
+	document.getElementById('presort').innerHTML += nums[i] + " ";
+}
+
+//Generate lucky ball number, 1-18 inclusive
+var luckyball = Math.floor(Math.random() * (19 - 1) + 1) 
+
+//Numeric sort function
+nums.sort(function(a, b){return a-b});
+
+//Print five numbers array
+for (var i = 0; i < nums.length; i++)
+{
+	document.getElementById('postsort').innerHTML += nums[i] + " ";
+}
+
+
+</script>
+
+</body>
+</html>
